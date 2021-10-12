@@ -1,0 +1,56 @@
+const voters = [
+    {name:'Bob' , age: 30, voted: true},
+    {name:'Jake' , age: 32, voted: true},
+    {name:'Kate' , age: 25, voted: false},
+    {name:'Sam' , age: 20, voted: false},
+    {name:'Phil' , age: 21, voted: true},
+    {name:'Ed' , age:55, voted:true},
+    {name:'Tami' , age: 54, voted:true},
+    {name: 'Mary', age: 31, voted: false},
+    {name: 'Becky', age: 43, voted: false},
+    {name: 'Joey', age: 41, voted: true},
+    {name: 'Jeff', age: 30, voted: true},
+    {name: 'Zack', age: 19, voted: false}
+];
+
+function setAgeRange(lowerLimit, upperLimit, propVotes, propPeople){ 
+    return {
+    lowerLimit,
+    upperLimit,
+    propVotes,
+    propPeople
+    }
+}
+function checkInRange (n, lowerLimit, upperLimit){
+    if (n >= lowerLimit && n <= upperLimit){
+        return true;
+    }
+    return false;
+}
+
+const YOUNG = setAgeRange(18, 25, 'numYoungVotes', 'numYoungPeople');
+const MID = setAgeRange(26, 35, 'numMidVotes', 'numMidPeople');
+const OLD = setAgeRange(36, 55, 'numOldVotes', 'numOldPeople');
+
+const ageHandler = {YOUNG, MID, OLD};
+
+let voterResults = voters.reduce( 
+    (acc, current)=>{
+        for (let ageRange of Object.values(ageHandler)){
+            if (checkInRange(current.age, ageRange.lowerLimit, ageRange.upperLimit)){
+                 acc = {...acc,
+                     [propPeople] : acc[propPeople] + 1
+                     };
+            }
+         return acc;
+        }
+    }, 
+    { numYoungVotes: 0,
+      numYoungPeople: 0,
+      numMidVotesPeople: 0,
+      numMIDPeople: 0,
+      numOldVotesPeople: 0,
+      numOldPeople: 0 
+    }
+
+);
