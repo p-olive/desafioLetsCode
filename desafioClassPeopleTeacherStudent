@@ -1,0 +1,29 @@
+class Person {
+    constructor ({firstName, lastName, age, gender, interests}){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.name = [firstName, lastName].join(' ');
+        this.age = age;
+        this.gender = gender;
+        this.interests = interests;
+        this.bio = `${this.name} is ${this.age} years old. They like ${this.interests}.`;
+        this.greeting = `Hi, I'm ${this.name}.`;
+    }
+}
+class Teacher extends Person {
+     constructor ({firstName, lastName, age, gender, interests, subject}){
+        super ({firstName, lastName, age, gender, interests});
+        this.subject = subject;
+        this.greeting = `Hello, my name is ${this.lastName}, and I teach ${this.subject}.`
+    }    
+}
+class Student extends Person {
+     constructor ({firstName, lastName, age, gender, interests}){
+        super ({firstName, lastName, age, gender, interests});
+        this.greeting = `Yo! I'm ${this.firstName}.`
+    }    
+}
+
+const person = new Person ({firstName: 'Felipe', lastName: 'Santos', age: 20, gender: 'male', interests: 'Scuba Diving'});
+const teacher = new Teacher ({firstName: 'João', lastName: 'Silva', age: 35, gender: 'male', interests: 'Numbers', subject: 'Math'});
+const student = new Student ({firstName: 'Zeca', lastName: 'Pagodinho', age: 17, gender: 'male', interests: 'Parties'});
