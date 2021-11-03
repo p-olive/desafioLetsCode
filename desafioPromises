@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Desafio Promises - Paulo Érico Carvalho Santos de Oliveira</h1>
+    </header>
+    <section>
+        <button type="button">Gerar lista</button>
+    </section>
+    <section>
+        <h2></h2>
+    </section>
+    <script>
+        function delay(time) {
+            return new Promise((resolve, reject) =>  setTimeout(resolve, time))
+        }
+        function generateRandomNumber(){
+            return Math.ceil(Math.random() * 10);
+        }
+        async function generateRandomArray(){
+            const randomLength = generateRandomNumber();
+            const randomArray = []; 
+            for (let index = 0; index < randomLength; index++) {
+                randomArray[index] = generateRandomNumber();
+            }
+            await delay(randomLength*1000);
+            return randomArray;
+        }
+        const h2 = document.querySelector('h2')
+        const gerarListaBtn = document.querySelector('button');
+        gerarListaBtn.onclick = async function () {
+            const promise1 = generateRandomArray();
+            promise1.then((randomArray)=>console.log(randomArray));
+            const promise2 = generateRandomArray();
+            promise2.then((randomArray)=>console.log(randomArray));
+            const promise3 = generateRandomArray();
+            promise3.then((randomArray)=>console.log(randomArray));
+
+            const promisesResult = Promise.allSettled([promise1, promise2, promise3]);
+            const promiseArray = promisesResult.then(function (result){
+                let promiseArray = [];
+                for (const object of result) {
+                    promiseArray = [...promiseArray, object.value];
+                }
+                console.log(promiseArray);
+                return promiseArray.flat();
+            });
+
+            h2.innerText = await promiseArray;
+        }
+    </script>
+</body>
+</html>
