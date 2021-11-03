@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <section>
+            <h1>Adicionar Usuário</h1>
+            <input type="text">
+            <button type="submit" id="enter" onclick="addUser()">Adicionar</button>
+        </section>
+        <section>
+            <h2>Usuários Cadastrados</h2>
+            <ul>
+            </ul>
+        </section>
+    </form>
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener("submit", (event)=>event.preventDefault());
+        
+        function createRemoveBtn(){
+            const removeBtn = document.createElement("button");
+            removeBtn["type"] = "button";
+            removeBtn.setAttribute("onclick", "removeUser(this.parentElement.id)");
+            removeBtn.className = "remove"
+            removeBtn.innerText = "Remover";
+            return removeBtn;
+        }
+
+        function addUser(){
+            const userName = document.querySelector("input");
+            const span = document.createElement("span");
+            const li = document.createElement("li");
+            const removeBtn = createRemoveBtn();
+            const ul = document.querySelector("ul");
+
+            span.innerText = userName.value;
+            li.appendChild(span);
+            li.appendChild(removeBtn);
+            li["id"] = userName.value;
+            ul.insertBefore(li, ul.firstChild);
+            userName.value = "";
+            
+            return ul;
+        }
+
+        function removeUser(userName){
+            const li = document.getElementById(userName);
+            li.remove();
+        }
+    </script>
+</body>
+</html>
