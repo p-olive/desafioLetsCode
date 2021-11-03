@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>Calculadora</h1>
+        <input type="number">
+        <button type="button" id="enter">ENTER</button>
+    </div>
+    <div>
+        <input type="radio" name="operation" value="+">+</input>
+        <input type="radio" name="operation" value="-">-</input>
+        <input type="radio" name="operation" value="*">*</input>
+        <input type="radio" name="operation" value="/">/</input>
+    </div>
+    <div id="total">
+        <button type="button" id="equals">=</button>
+        <h2>
+            Resultado: <span></span>
+        </h2>
+    </div>
+    <script>
+        let numbers = [];
+
+        function getInputNumber(){
+            const inputNumber = document.querySelector("input[type='number']").value;
+            return +inputNumber;
+        }
+        function clearInputNumber(){
+            document.querySelector("input[type='number']").value = '';
+        }
+        const enterBtn = document.querySelector('#enter');
+        enterBtn.onclick = function(){
+            numbers[0] = numbers[1];
+            numbers[1] = getInputNumber();
+            clearInputNumber();
+            return numbers;
+        }
+        function getOperator(){
+            const inputOperator = document.querySelector("input[type='radio']:checked").value;
+            return inputOperator;
+        }
+        function add (numbers) {
+            return numbers[0] + numbers[1];
+        }
+        function subtract (numbers) {
+            return numbers[0] - numbers[1];
+        }
+        function multiply (numbers) {
+            return numbers[0] * numbers[1];
+        }
+        function divide (numbers) {
+            return numbers[0] / numbers[1];
+        }
+        function getResult(numbers){
+            const operator = getOperator();
+            let result;
+            switch  (operator){
+                case '+' :
+                    result = add(numbers);
+                    break;
+                case '-' :
+                    result = subtract(numbers);
+                    break;
+                case '*' :
+                    result = multiply(numbers);
+                    break;
+                case '/' :
+                    result = divide(numbers);
+                    break;
+            }
+            return result;
+        }
+        const equalsBtn = document.querySelector("#equals");
+        equalsBtn.onclick = function (){
+            const operator = getOperator();
+            const result = getResult(numbers);
+            const totalSpan = document.querySelector('#total span');
+
+            totalSpan.innerText = `${numbers[0]} ${operator} ${numbers[1]} = ${result}`
+            console.log (result);
+        };
+    </script>
+</body>
+</html>
